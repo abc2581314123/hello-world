@@ -1,0 +1,19 @@
+﻿全公司共享svn路径：  svn://49.4.149.78:3690/developer/共享
+辽宁联通团队svn路径：svn://49.4.149.78:3690/developer/研发部/分公司/辽宁/联通
+辽宁源代码svn路径：  svn://49.4.149.78:3690/developer/研发部/分公司/辽宁/源代码
+
+其中，辽宁源代码svn路径，为联通、电信团队共享
+
+svn://49.4.149.78:3690/developer/研发部/分公司/辽宁/联通/cms/Trunk
+svn://49.4.149.78:3690/developer/研发部/分公司/辽宁/联通/cms/branches
+svn://49.4.149.78:3690/developer/研发部/分公司/辽宁/联通/cms/doc
+
+
+
+
+用户名 密码
+rendongdong = rendongdong1009
+
+
+
+svn://svn.bytuetech.com:36901/developer/研发部/分公司/辽宁/联通
