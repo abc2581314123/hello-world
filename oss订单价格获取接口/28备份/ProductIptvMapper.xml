@@ -1,0 +1,435 @@
+<?xml version="1.0" encoding="UTF-8" ?>  
+<!DOCTYPE mapper PUBLIC 
+	"-//mybatis.org//DTD Mapper 3.0//EN" 
+	"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<!-- 每一个表的命名空间必须不一样 -->	
+<mapper namespace="com.besto.oss.iptv.mapper.ProductIptvMapper">
+   <!-- 查询产品信息-->
+	<select id="searchProducts" parameterType="com.besto.oss.vo.ProductVO" resultType="com.besto.oss.vo.ProductVO">
+		SELECT
+			op.id,
+			op.code,
+			op.name,
+			op.type,
+			op.status,
+			ot.price,
+			op.description,
+			op.imgurl,
+			op.deleteflag,
+			op.createperson,
+			op.createtime,
+			op.providerid,
+			op.begintime,
+			op.endtime,	
+			op.category_id,	
+			ot. NAME tariffName,
+			ot.id tariffId,
+			ot. CODE tariff_code,
+			ot.cycle tariff_cycle,
+			ot.isgoon isgoon,
+			ot.type tariff_type,
+			ot.billingcode tariff_billingcode,
+			ot.paytype tariff_paytype,
+			ot.description tariff_description,
+			ot.providerid tariff_providerid,
+			ot.mode 
+		FROM
+			oss_product op
+		LEFT OUTER JOIN oss_tariffmapping otm ON op.id = otm.pid
+		LEFT OUTER JOIN oss_tariff ot ON otm.tariff_id = ot.id
+		WHERE
+			op.deleteflag = 0
+			and op.status='0'
+			and ot.mode=#{mode}
+			and op.displaytype!=#{displaytypeNot}
+			<if test="category_id != null and category_id!=''">
+				and op.category_id = #{category_id}
+			</if>
+		ORDER BY
+			op.createtime DESC
+		LIMIT ${sqlCountSt},${sqlCountEd}
+	</select>
+	<!-- 查询产品总行数-->
+	<select id="searchProductsCount" parameterType="com.besto.oss.vo.ProductVO" resultType="String">
+				SELECT
+			count(op.id)
+		FROM
+			oss_product op
+		LEFT OUTER JOIN oss_tariffmapping otm ON op.id = otm.pid
+		LEFT OUTER JOIN oss_tariff ot ON otm.tariff_id = ot.id
+		WHERE
+			op.deleteflag = 0
+			and op.status='0'
+			and ot.mode=#{mode}
+			and op.displaytype!=#{displaytypeNot}
+		<if test="category_id != null and category_id!=''">
+				and op.category_id = #{category_id}
+		</if>
+	</select>
+	
+	<!-- 根据phone查询订购产品信息 -->
+	<select id="searchPhoneOrderList" resultType="com.besto.oss.vo.OrderVO" parameterType="com.besto.oss.vo.OrderVO">
+		SELECT
+			oof.onumber, 
+			oof.terminaltype,
+			oof.ordertype,
+			oof.pid,
+			oof.pcode,
+			oof.pname,
+			oof.price,
+			oof.status,
+			oof.paytype,
+			oof.ordertime,
+			oof.canceltime,
+			oof.begintime,
+			oof.endtime,
+			oof.pisgoon,
+			oof.contentid,
+			oof.contenttype,
+			oof.cpproductid,
+			oof.tariff_cycle,
+			op.CODE pro_code,
+			op.STATUS pro_status,
+			ot.price pro_price,
+			op.description pro_description,
+			op.imgurl pro_imgurl,
+			op.deleteflag pro_deleteflag,
+			op.providerid pro_providerid,
+			op.begintime pro_begintime,
+			op.endtime pro_endtime,
+			ot.NAME tariff_name,
+			ot.mode mode,
+			ot.id tariff_id,
+			ot.isgoon isgoon,
+			ot.type tariff_type,
+			ot.billingcode tariff_billingcode,
+			ot.paytype tariff_paytype,
+			ot.providerid tariff_providerid,
+			oof.source,
+			oof.phonenum,
+			oof.giftcode,
+			oof.referee,
+			oof.activetime,
+			oof.refundtime,
+			oof.accountmold,
+			oof.remark,
+			oof.user_id
+		FROM
+			oss_order_form oof
+		LEFT OUTER JOIN oss_product op ON oof.pid = op.id
+		LEFT OUTER JOIN oss_tariffmapping otm ON op.id = otm.pid
+		LEFT OUTER JOIN oss_tariff ot ON otm.tariff_id = ot.id
+		WHERE
+			oof.accountmold='01'
+			and oof.source='02'
+			and oof.phonenum = #{phonenum}
+			<if test="status != null and status!=''">
+				and oof.status = #{status}
+			</if>
+		ORDER BY
+			oof.ordertime DESC
+	</select>
+	
+	<!-- （客服系统）查询订单 -->
+	<select id="queryList" parameterType="com.besto.oss.vo.OrderVO" resultType="com.besto.oss.vo.OrderVO">
+		
+		SELECT
+			A.onumber,
+			A.pcode,
+			A.pname,
+			A.price,
+			A.status,
+			A.ordertime,
+			A.begintime,
+			A.endtime,
+			A.cpproductid,
+			A.referee,
+			A.giftcode,
+			A.phonenum,
+			A.source,
+			A.paytype,
+			A.usertoken,
+			A.tariff_cycle,
+			A.pisgoon,
+			<!-- 添加包月订购周期统计字段  2018/10/10 rendongdong--> 
+<!-- 			if(A.endtime = '',month(SYSDATE()),month(str_to_date(A.endtime,'%Y-%m-%d'))) -->
+<!-- 			- month(str_to_date(A.begintime,'%Y-%m-%d'))+1 ordercycle -->
+			count(*) ordercycle
+			
+		FROM
+			oss_order_form A	
+		WHERE
+		1=1
+			AND A.accountmold = '01'
+		<if test="usertoken != null and usertoken !=''">
+			AND A.usertoken like '%${usertoken}%'
+		</if>
+		<if test="phonenum != null and phonenum !=''">
+			AND A.phonenum like '%${phonenum}%'
+		</if>
+		<if test="orderBeginTime != null and orderBeginTime !=''">
+			<![CDATA[ AND DATE_FORMAT(A.ordertime,'%Y%m%d') >= DATE_FORMAT(#{orderBeginTime},'%Y%m%d') ]]> 
+		</if>
+		<if test="orderEndTime != null and orderEndTime !=''">
+			<![CDATA[ AND DATE_FORMAT(A.ordertime,'%Y%m%d') <= DATE_FORMAT(#{orderEndTime},'%Y%m%d') ]]> 
+		</if>
+		<if test="pname != null and pname !=''">
+			AND A.pname like '%${pname}%'
+		</if>
+		GROUP BY A.onumber
+		ORDER BY A.ordertime DESC 
+		Limit #{pageid},#{pagecount}
+		
+	</select>
+	
+	<!-- （客服系统）查询订单总条数 -->
+	<select id="queryCount" parameterType="com.besto.oss.vo.OrderVO" resultType="java.lang.Integer">
+		SELECT
+			COUNT(A.usertoken)
+		FROM 
+		oss_order_form A
+		WHERE
+			A.accountmold = '01'
+		<if test="usertoken != null and usertoken !=''">
+			AND A.usertoken like '%${usertoken}%'
+		</if>
+		<if test="phonenum != null and phonenum !=''">
+			AND A.phonenum like '%${phonenum}%'
+		</if>
+		<if test="orderBeginTime != null and orderBeginTime !=''">
+			<![CDATA[ AND DATE_FORMAT(A.ordertime,'%Y%m%d') >= DATE_FORMAT(#{orderBeginTime},'%Y%m%d') ]]> 
+		</if>
+		<if test="orderEndTime != null and orderEndTime !=''">
+			<![CDATA[ AND DATE_FORMAT(A.ordertime,'%Y%m%d') <= DATE_FORMAT(#{orderEndTime},'%Y%m%d') ]]> 
+		</if>
+		<if test="pname != null and pname !=''">
+			AND A.pname like '%${pname}%'
+		</if>
+	</select>
+	
+	
+	
+		
+	
+	
+	<!-- 查询退订信息个数-->
+	<select id="searchOrderFromRefund" parameterType="com.besto.oss.vo.OrderRefundVO" resultType="String">
+		
+		SELECT count(id) FROM  oss_order_refund a
+		
+		<where> 
+			a.onumber = #{onumber}
+		</where>
+		
+	</select>
+	
+	<select id="searchOrderFromCanceled" parameterType="com.besto.oss.vo.OrderRefundVO" resultType="String">
+		
+		SELECT count(id) FROM  oss_order_form a
+		
+		<where> 
+			a.onumber = #{onumber}
+			and accountmold='02'
+		</where>
+		
+	</select>
+	
+	<insert id="saveOrderRefund"  parameterType="com.besto.oss.vo.OrderRefundVO">
+		insert into oss_order_refund
+		( 
+		form_id,onumber,usertoken,phonenum,user_id,
+		pid,pcode,pname,price,paytype,
+		ordertime,applytime,refundtime,refundchannel,refunduserid,
+		refundusername,refundprice,verifyuserid,verifyusername,`status`,
+		remark
+		)
+		(
+		select 
+		
+		a.id ,a.onumber , a.usertoken, a.phonenum,a.user_id,
+		a.pid,a.pcode,a.pname, a.price,a.paytype,
+		a.ordertime,#{applytime},#{refundtime},#{refundchannel},#{refunduserid},
+		#{refundusername},#{refundprice},#{verifyuserid},#{verifyusername},#{status},
+		#{remark}
+		from oss_order_form a 
+		where a.onumber = #{onumber}
+		and a.accountmold='01'
+		limit 1
+		)
+	</insert>
+	
+	
+	
+	<select id="searchOrder" parameterType="com.besto.oss.vo.OrderVO" resultType="com.besto.oss.vo.OrderVO">
+		select id,price,
+		onumber,usertoken,formtype,terminaltype,ordertype,
+		pid,pcode,pname,
+		paytype,ordertime,canceltime,begintime,endtime,	
+		pisgoon,contentid,contenttype,thirdorderstatus,thirdcanceltstatus,	
+		cpproductid,tariff_cycle,createtime,cancelordertype,goontype,
+		orderspid,spordernum,nickname,inserttime,user_id,program_name,
+		source,phonenum,giftcode,referee,activetime,
+		remark 
+		 
+		from oss_order_form
+       	<where>
+       		onumber = #{onumber} and accountmold = '01'
+		</where>
+		
+	</select>
+	
+	
+	<update id="updateRefundOrder"  parameterType="com.besto.oss.vo.OrderVO">
+		update oss_order_form
+		<set>
+				status= #{status},
+				pisgoon = #{pisgoon},
+				refundtime = #{refundtime},
+				edittime= #{edittime}
+		</set>
+		<where> 
+			id = #{id}
+		</where>
+	</update>
+	
+	
+	<insert id="saveRefundOrder" parameterType="com.besto.oss.vo.OrderVO">
+	INSERT INTO  oss_order_form (
+       	onumber,usertoken,formtype,terminaltype,ordertype,
+		pid,pcode,pname,price,status,
+		paytype,ordertime,canceltime,begintime,endtime,	
+		pisgoon,contentid,contenttype,thirdorderstatus,thirdcanceltstatus,	
+		cpproductid,tariff_cycle,createtime,cancelordertype,goontype,
+		orderspid,spordernum,nickname,inserttime,user_id,program_name,
+		source,phonenum,giftcode,referee,activetime,
+		refundtime,accountmold,remark,edittime
+		)
+       	values 
+       	(
+		#{onumber}  ,#{usertoken}  ,#{formtype}  ,#{terminaltype}  ,#{ordertype}  ,
+		#{pid}  ,#{pcode}  ,#{pname}  ,#{price}  ,#{status}  ,
+		#{paytype}  ,#{ordertime}  ,#{canceltime}  ,#{begintime}  ,#{endtime}  ,
+		#{pisgoon}  ,#{contentid}  ,#{contenttype}  ,#{thirdorderstatus}  ,#{thirdcanceltstatus}  ,	
+		#{cpproductid}  ,#{tariff_cycle}  ,#{createtime}  ,#{cancelordertype}  ,#{goontype}  ,
+		#{orderspid}  ,#{spordernum}  ,#{nickname}  ,#{inserttime}  ,#{user_id}  ,#{program_name}  ,
+		#{source}  ,#{phonenum}  ,#{giftcode}  ,#{referee}  ,#{activetime}  ,
+		#{refundtime}  ,#{accountmold}  ,#{remark}  ,#{edittime}
+       	)
+	
+	</insert>
+	
+	
+	<insert id="saveRefundOrderList" parameterType="com.besto.oss.vo.OrderVO">
+	insert into oss_order_list (
+		onumber,nickname,usertoken,formtype,terminaltype,
+		ordertype,pid,pcode,pname,price,
+		STATUS,paytype,ordertime,canceltime,begintime,
+		endtime,pisgoon,contentid,contenttype,cpproductid,
+		createtime,inserttime,cancelordertype,source,phonenum,
+		giftcode,referee,activetime,refundtime,accountmold,
+		remark,edittime
+		)
+		value
+		(
+		#{onumber},#{nickname},#{usertoken},#{formtype},#{terminaltype},
+		#{ordertype},#{pid},#{pcode},#{pname},#{price} ,
+		#{status},#{paytype},#{ordertime},#{canceltime},#{begintime},
+		#{endtime},#{pisgoon},#{contentid},#{contenttype},#{cpproductid},
+		#{createtime},#{inserttime},#{cancelordertype},#{source},#{phonenum},
+		#{giftcode},#{referee},#{activetime},#{refundtime},#{accountmold},
+		#{remark},#{edittime}
+		)
+		
+	</insert>
+		
+	<insert id="saveRefundOrderAccount" parameterType="com.besto.oss.vo.OrderVO">
+	INSERT INTO oss_order_account (
+		code,onumber,pid,pcode,pname,
+		usertoken,price,paytype,accounttime,createtime,
+		accounttype,orderisgoon,ordertime,accountBegintime,source,
+		phonenum,giftcode,referee,activetime,refundtime,
+		accountmold,remark
+		)
+		value
+		(
+		#{code},#{onumber},#{pid},#{pcode},#{pname},
+		#{usertoken},#{price},#{paytype},#{accounttime},#{createtime},
+		#{accounttype},#{orderisgoon},#{ordertime},#{begintime},#{source},
+		#{phonenum},#{giftcode},#{referee},#{activetime},#{refundtime},
+		#{accountmold},#{remark}
+		)
+		
+	</insert>
+	
+	<!-- [(客服系统)查询退订信息列表总数] -->
+	<select id="searchCount" parameterType="com.besto.oss.vo.OrderVO" resultType="java.lang.Integer">
+		SELECT
+			COUNT(1)
+		FROM 
+			oss_order_cancle
+		WHERE
+			1 = 1
+		<if test="cancletype != null and cancletype !=''">
+			AND cancletype = #{cancletype}
+		</if>
+		<if test="usertoken != null and usertoken !=''">
+			AND usertoken = #{usertoken}
+		</if>
+		<if test="onumber != null and onumber !=''">
+			AND onumber = #{onumber}
+		</if>
+		<if test="orderBeginTime != null and orderBeginTime != ''">
+			<![CDATA[ AND DATE_FORMAT(ordertime, '%Y%m%d') >= DATE_FORMAT(#{orderBeginTime}, '%Y%m%d') ]]> 
+		</if>
+		<if test="orderEndTime != null and orderEndTime != ''">
+			<![CDATA[ AND DATE_FORMAT(ordertime, '%Y%m%d') <= DATE_FORMAT(#{orderEndTime}, '%Y%m%d') ]]> 
+		</if>
+	</select>
+	
+	<!-- [(客服系统)查询退订信息列表] -->
+	<select id="searchList" parameterType="com.besto.oss.vo.OrderVO" resultType="com.besto.oss.vo.OrderVO">
+		SELECT
+			usertoken,
+			onumber,
+			pcode,
+			pname,
+			price,
+			status,
+			ordertime,
+			begintime,
+			endtime,
+			cpproductid,
+			referee,
+			giftcode,
+			phonenum,
+			source,
+			paytype,
+			usertoken,
+			tariff_cycle,
+			cancletype
+		FROM
+			oss_order_cancle
+		WHERE
+			1 = 1
+		<if test="cancletype != null and cancletype !=''">
+			AND cancletype = #{cancletype}
+		</if>
+		<if test="usertoken != null and usertoken !=''">
+			AND usertoken = #{usertoken}
+		</if>
+		<if test="onumber != null and onumber !=''">
+			AND onumber = #{onumber}
+		</if>
+		<if test="orderBeginTime != null and orderBeginTime != ''">
+			<![CDATA[ AND DATE_FORMAT(ordertime, '%Y%m%d') >= DATE_FORMAT(#{orderBeginTime}, '%Y%m%d') ]]> 
+		</if>
+		<if test="orderEndTime != null and orderEndTime != ''">
+			<![CDATA[ AND DATE_FORMAT(ordertime, '%Y%m%d') <= DATE_FORMAT(#{orderEndTime}, '%Y%m%d') ]]> 
+		</if>
+		ORDER BY 
+			id DESC 
+		LIMIT 
+			${pageid}, ${pagecount}
+	</select>
+	
+</mapper> 
