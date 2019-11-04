@@ -1,0 +1,237 @@
+﻿.w0{width: 0;}
+.menu-container{
+	position: absolute;
+	top: 0;
+	left: -400px;
+	height: 720px;
+}
+.menu{
+	float: left;
+	height: 720px;
+}
+/*菜单容器*/
+.menu-list-container{
+	position: relative;
+	background-color: rgba(0,0,0,.7);
+	overflow: hidden;
+}
+/*宽菜单*/
+.menu-list-container-narrow{
+	width: 150px;
+}
+/*窄菜单*/
+.menu-list-container-wide{
+	width: 300px;
+}
+/*光标选中的菜单容器*/
+.menu-list-container-sel{
+	background-color: rgba(17,77,120,.8);
+	color: #a8c0d9;
+}
+/*菜单与屏幕上下边距(720-7*100)/2*/
+.menu-list{
+	padding: 10px 0;
+}
+/*菜单元素*/
+.menu-list>li{
+	position: relative;
+	height: 100px;
+}
+/*类型菜单*/
+.menu-list-category{
+	text-align: center;
+	line-height: 100px;
+}
+/*频道菜单频道号*/
+.menu-list-channel-id{
+	position: absolute;
+	left: 20px;
+	top: 25px;
+	width: 54px;
+	height: 28px;
+	border-radius: 3px;
+	line-height: 28px;
+	background-color: #b7b6b6;
+	text-align: center;
+	color: #0c0c0c;
+}
+/*频道菜单频道名*/
+.menu-list-channel-name{
+	padding: 25px 0 5px 80px;
+	font-size: 26px;
+}
+/*频道菜单正在播放*/
+.menu-list-channel-program{
+	padding: 0 0 0 80px;
+	font-size: 18px;
+}
+/*节目菜单节目名*/
+.menu-list-program-name{
+	padding: 25px 0 5px 20px;
+	font-size: 26px;
+}
+/*节目菜单播放时间*/
+.menu-list-program-time{
+	padding: 0 0 0 20px;
+	font-size: 18px;
+}
+/*节目菜单节目类型（回看/直播/预约）*/
+.menu-list-program-type{
+	position: absolute;
+	left: 226px;
+	top: 25px;
+	width: 54px;
+	height: 28px;
+	border-radius: 3px;
+	line-height: 28px;
+	background-color: #b7b6b6;
+	text-align: center;
+	font-size: 16px;
+	color: #0c0c0c;
+}
+/*日期菜单周*/
+.menu-list-day{
+	padding: 25px 0 5px 0;
+	text-align: center;
+	font-size: 26px;
+}
+/*日期菜单日期*/
+.menu-list-date{
+	text-align: center;
+	font-size: 18px;
+}
+/*当前播放节目的相关菜单元素*/
+.menu-list-content-current{
+	color: #4dadda;
+}
+/*频道菜单选中元素呼出节目菜单并且光标进入节目菜单后频道菜单样式*/
+.menu-list-content-sel-p{
+	color: #0586d3;
+}
+/*频道菜单选中元素呼出节目菜单并且光标进入节目菜单后频道菜单样式*/
+.menu-list-content-sel{
+	background-color: #058dd1;
+	color: #fff;
+}
+/*光标选中的菜单的频道号、节目类型*/
+.menu-list-container-sel .menu-list-channel-id,
+.menu-list-container-sel .menu-list-program-type{
+	background-color: #a8c0d9;
+	color: #447ca3;
+}
+/*当前频道文字颜色，光标不选定频道菜单文字颜色与正常菜单元素一致*/
+.menu-list-content-current .menu-list-channel-name,
+.menu-list-content-current .menu-list-channel-program{
+	color: #b7b6b6;
+}
+/*光标选中频道菜单当前频道文字颜色，光标选中频道菜单文字颜色与正常菜单元素一致*/
+.menu-list-container-sel .menu-list-content-current .menu-list-channel-name,
+.menu-list-container-sel .menu-list-content-current .menu-list-channel-program{
+	color: #a8c0d9;
+}
+/*光标选中当前频道文字颜色*/
+.menu-list-content-sel .menu-list-channel-name,
+.menu-list-content-sel .menu-list-channel-program{
+	color: #fff;
+}
+/*光标选中当前频道文字颜色*/
+.menu-list-content-sel-p .menu-list-channel-name,
+.menu-list-content-sel-p .menu-list-channel-program{
+	color: #4dadda;
+}
+/*频道菜单选中元素呼出节目菜单并且光标进入节目菜单后频道菜单频道号背景样式*/
+.menu-list-content-sel-p .menu-list-channel-id{
+	color: #2f637d;
+	background-color: #4dadda;
+}
+/*非光标选中的菜单中当前播放节目的频道号的播放图标*/
+.menu-list-content-current .menu-list-channel-id{
+	color: transparent;
+	background-image: url(../../img/ico_playing.png);
+	background-repeat: no-repeat;
+	background-position: center; 
+}
+/*光标选中的菜单中当前播放节目的频道号的播放图标*/
+.menu-list-container-sel .menu-list-content-current .menu-list-channel-id{
+	color: transparent;
+	background-image: url(../../img/ico_playing_sel.png);
+	background-repeat: no-repeat;
+	background-position: center; 
+}
+/*光标选中频道菜单元素频道号*/
+.menu-list-content-sel .menu-list-channel-id{
+	color: #2f637d;
+	background-color: #fff;
+}
+
+/*光标选中节目元素节目类型*/
+.menu-list-content-sel .menu-list-program-type{
+	background-color: #fff;
+}
+/*菜单缝隙*/
+.menu-gap{
+	width: 1px;
+	background-image: url(../../img/bg_menu_gap_1_1.png);
+	background-repeat: repeat-y;
+}
+/*←层*/
+.menu-hint-left{
+	position: absolute;
+	left: 0;
+	top: 0;
+	width: 50px;
+	height: 720px;
+	line-height: 720px;
+        margin-top:360px;
+}
+/*→层*/
+.menu-hint-right{
+	width: 150px;
+	height: 720px;
+	background-image: url(../../img/bg_menu_hint_150_1.png);
+	background-repeat: repeat-y;
+	line-height: 720px;
+        margin-top:360px;
+}
+
+.selector-single-ele{
+	width: 400px;
+	height: 70px;
+	line-height: 70px;
+	font-size: 24px;
+}
+.selector-single-ele:before{
+	content: attr(data-date);
+	margin: 0 20px 0 50px;
+	vertical-align: top;
+}
+.selector-single-ele-current{
+	background: url(../../img/zy-play.png) 25px center no-repeat;	
+}
+.selector-single-ele-sel{
+	background-color: #058dd1;
+	color: #fff;
+}
+.ellipsis{
+	white-space:nowrap; 
+	text-overflow:ellipsis; 
+	overflow: hidden; 
+}
+/*综艺菜单*/
+.menu-list-container-zy{
+	width: 400px;
+}
+/*综艺菜单元素*/
+.menu-zy-list{
+	padding: 10px 0;
+}
+.menu-lxj-list{
+	padding: 10px 0;
+}
+.selector-single-ele1{
+	width: 200px;
+	height: 70px;
+	line-height: 70px;
+	font-size: 24px;
+	text-align: center;
+}

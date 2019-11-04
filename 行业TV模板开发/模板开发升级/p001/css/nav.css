@@ -1,0 +1,65 @@
+#nav li {
+	position: absolute;
+	width: 415px;
+	height: 303px;
+}
+
+#nav li:nth-of-type(1) {
+	left: 20px;
+	top: 60px;
+	background: url(../img/nav_1.png) center center no-repeat;
+}
+
+#nav li:nth-of-type(2) {
+	left: 440px;
+	top: 60px;
+	background: url(../img/nav_2.png) center center no-repeat;
+}
+
+#nav li:nth-of-type(3) {
+	left: 860px;
+	top: 60px;
+	background: url(../img/nav_3.png) center center no-repeat;
+}
+
+#nav li:nth-of-type(4) {
+	left: 20px;
+	top: 370px;
+	background: url(../img/nav_4.png) center center no-repeat;
+}
+
+#nav li:nth-of-type(5) {
+	left: 440px;
+	top: 370px;
+	background: url(../img/nav_5.png) center center no-repeat;
+}
+
+#nav li:nth-of-type(6) {
+	left: 860px;
+	top: 370px;
+	background: url(../img/nav_6.png) center center no-repeat;
+}
+
+#nav li:nth-of-type(1).focus {
+	background: url(../img/nav_1H.png) center center no-repeat;
+}
+
+#nav li:nth-of-type(2).focus {
+	background: url(../img/nav_2H.png) center center no-repeat;
+}
+
+#nav li:nth-of-type(3).focus {
+	background: url(../img/nav_3H.png) center center no-repeat;
+}
+
+#nav li:nth-of-type(4).focus {
+	background: url(../img/nav_4H.png) center center no-repeat;
+}
+
+#nav li:nth-of-type(5).focus {
+	background: url(../img/nav_5H.png) center center no-repeat;
+}
+
+#nav li:nth-of-type(6).focus {
+	background: url(../img/nav_6H.png) center center no-repeat;
+}

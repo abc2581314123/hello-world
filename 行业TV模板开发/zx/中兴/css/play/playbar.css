@@ -1,0 +1,78 @@
+.playbar-container{
+	position: absolute;
+	left: 0;
+	top: 450px;
+	width: 1280px;
+	height: 270px;
+	background-image: url(../img/bg_playbarcontainer.png);
+	background-repeat: repeat-x;
+}
+
+.playstate{
+	position: absolute;
+	left: 30px;
+	top: 204px;
+	width: 60px;
+	height: 30px;
+	background-image: url(../img/ico_playbar.png);
+	background-repeat: no-repeat;
+}
+.playstate-play{
+	background-position: -149px -32px;
+}
+.playstate-forward{
+	background-position: -87px -32px;
+}
+.playstate-back{
+	background-position: -87px 0;
+}
+.playstate-pause{
+	background-position: -149px 0;
+}
+.playbar-bg{
+	position: absolute;
+	left: 120px;
+	top: 218px;
+	width: 1090px;
+	height: 2px;
+	background-color: #2f2f2f;
+	z-index: 9;
+}
+.playbar{
+	position: relative;
+	left: 0;
+	top: 0;
+	width: 1090px;
+	height: 2px;
+	background-color: #058dd1;
+}
+.playtime{
+	position: absolute;
+	right: -43px;
+	top: -50px;
+	width: 85px;
+	height: 50px;
+	background-image: url(../img/ico_playbar.png);
+	background-repeat: no-repeat;
+	background-position: 0 0;
+	text-align: center;
+	line-height: 35px;
+	color: #fff;
+}
+
+.back{
+	position: absolute;
+	left: 510px;
+	top: 500px;
+	width: 260px;
+	height: 60px;
+	background: url(../img/back.png) no-repeat;
+}
+.playbar-oper{
+	position: relative;
+	left: 0;
+	top: 0;
+	width: 1090px;
+	height: 2px;
+	background-color: #ab6d00;
+}

@@ -1,0 +1,228 @@
+<%@ page language="java" import="java.util.*" pageEncoding="utf-8"%>
+<%@ page language="java" import="javax.servlet.http.HttpSession" %>
+<%@ page language="java" import="com.besto.util.CommonInterface" %>
+<%@ page language="java" import="com.besto.util.SecurityTools" %>
+<%@ page language="java" import="com.besto.util.ReadProperties" %>
+<%@ page language="java" import="com.besto.util.EscapeUnescape" %>
+<%@ page language="java" import="com.besto.util.TurnPage" %>
+<%@ page language="java" import="com.besto.util.AESUtil"%>
+<%@ page language="java" import="org.apache.log4j.Logger" %>
+<%@ page language="java" import="java.util.*" %>
+<%@ page language="java" import="java.util.List" %>
+<%@ page language="java" import="com.besto.util.AESUtil"%>
+<%@ page language="java" import="com.besto.util.Base64"%>
+<%@ page language="java" import="com.besto.util.Decryptor"%>
+<%@ page language="java" import="com.besto.util.Encryptor"%>
+<%@ page language="java" import="com.besto.util.MD5"%>
+<%@ page import="java.text.SimpleDateFormat"%>
+<%@ page import="java.util.Calendar"%>
+<%@ page import="java.net.URLDecoder"%>
+<%@ page import="java.net.URLEncoder"%>
+<%@ page import="java.io.IOException"%>
+<%@ page import="org.dom4j.Document"%>
+<%@ page import="org.dom4j.Element"%>
+<%@ page import="javax.servlet.http.Cookie"%>
+<%@ page import="org.dom4j.DocumentHelper"%>
+<%@ page language="java" import="org.json.*" %>
+
+
+
+
+
+    <%
+    Logger logger = Logger.getLogger(CommonInterface.class);
+    String path = request.getContextPath();
+
+
+    
+    String filePath = "";
+
+    //读取配置文件
+    try {
+        filePath = this.getClass().getClassLoader().getResource("interface.properties").toURI().getPath();     //获取接口配置文件路径
+     }catch (Exception e) { 
+        e.printStackTrace();
+    }   
+    Properties properties = ReadProperties.readProperties(filePath);
+    String zxpath="";//zx路径
+    if(request.getParameter("zxpath")!=null){
+        zxpath = request.getParameter("zxpath");
+        session.setAttribute("zxpath", zxpath);
+    }
+    if(session.getAttribute("zxpath")!=null&&!"".equals(session.getAttribute("zxpath").toString())){
+         zxpath =session.getAttribute("zxpath").toString();
+
+       }
+
+    String providerid="";//供应商类型
+    if(request.getParameter("providerid")!=null){
+        providerid = request.getParameter("providerid");
+        session.setAttribute("providerid",providerid);
+    }
+    if ("".equals(providerid) || providerid == null) {
+        providerid = (String)session.getAttribute("providerid");
+    }
+        String iaspuserid="";//供应商类型
+        if(request.getParameter("iaspuserid")!=null){
+            iaspuserid = request.getParameter("iaspuserid");
+            session.setAttribute("iaspuserid",iaspuserid);
+        }
+        if ("".equals(iaspuserid) || iaspuserid == null) {
+            iaspuserid = (String)session.getAttribute("iaspuserid");
+        }
+        String iaspadsl="";//宽带账号
+        if(request.getParameter("iaspadsl")!=null){
+            iaspadsl = request.getParameter("iaspadsl");
+            session.setAttribute("iaspadsl",iaspadsl);
+        }
+        if ("".equals(iaspadsl) || iaspadsl == null) {
+            iaspadsl = (String)session.getAttribute("iaspadsl");
+        }
+        String iaspip="";//
+        if(request.getParameter("iaspip")!=null){
+            iaspip = request.getParameter("iaspip");
+            session.setAttribute("iaspip",iaspip);
+        }
+        if ("".equals(iaspip) || iaspip == null) {
+            iaspip = (String)session.getAttribute("iaspip");
+        }
+        String iaspmac="";//宽带账号
+        if(request.getParameter("iaspmac")!=null){
+            iaspmac = request.getParameter("iaspmac");
+            session.setAttribute("iaspmac",iaspmac);
+        }
+        if ("".equals(iaspmac) || iaspmac == null) {
+            iaspmac = (String)session.getAttribute("iaspmac");
+        }
+    
+        String boxCity="";// 区域ID
+        if(request.getParameter("boxCity")!=null){
+            boxCity = request.getParameter("boxCity");
+            session.setAttribute("boxCity",boxCity);
+        }
+        if ("".equals(boxCity) || boxCity == null) {
+            boxCity = (String)session.getAttribute("boxCity");
+        }
+        String stbId="";//机顶盒ID
+        if(request.getParameter("stbId")!=null){
+            stbId = request.getParameter("stbId");
+            session.setAttribute("stbId",stbId);
+        }
+        if ("".equals(stbId) || stbId == null) {
+            stbId = (String)session.getAttribute("stbId");
+        }
+        String hdpath="";//1号平台全路径
+        if(request.getParameter("hdpath")!=null){
+            hdpath = request.getParameter("hdpath");
+            session.setAttribute("hdpath",hdpath);
+        }
+        if ("".equals(hdpath) || hdpath == null) {
+            hdpath = (String)session.getAttribute("hdpath");
+        }
+
+%>
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>首页</title>
+	<meta name="Page-View-Size" content="1280*720">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0">
+	<link rel="stylesheet" href="EPGcss/common.css">
+    <style type="text/css">
+        img { display: inline-block; vertical-align: top; }
+        * {
+            color: #c2c2c0;
+        }
+        .block .title {
+            font-size: 32px;
+            margin-bottom: 30px;
+        }
+        .title{
+            text-align:center;
+        }
+        .move {
+            overflow: hidden;
+            position: absolute;
+            top: 120px;
+            left: 430px;
+            width: 805px;
+            height: 500px;
+        }
+        .move_main {
+            width: 10000px;
+            position: absolute;
+        }
+        .move .block {
+            float: left;
+            margin-left: 16px;
+        }
+        .adp {
+            border: 4px solid transparent;
+        }
+        .adp.sel {
+            border: 4px solid #fff;
+        }
+        .showLine {
+            position: absolute;
+            left: 1055px;
+            top: 570px;
+        }
+        .showLine ul li {
+            float: left;
+            width: 50px;
+            height: 5px;
+            background: #fff;
+            margin-left: 5px;
+        }
+    </style>
+</head>
+<body style="width:1280px; height:720px; background: url('img/body.jpg') no-repeat">
+    <div style="position: relative; margin:120px 0 0 60px">
+        <!-- 看电视 -->
+        <div class="tv block" style="display: inline-block;">
+            <div class="title">看电视</div>
+            <div class="adp" id = "iframego"><img src="img/seat.png" width="360" height="270"></div>
+            <div class="adp" style="margin-top: 8px;"><img src="img/listChanel.png"></div>
+        </div>
+    </div>
+
+    <div class="move">
+            <div class="move_main">
+                <div class="block">
+                    <div class="title">如家信息</div>
+                    <div class="adp"><img src="img/seat.png" width="240" height="360"></div>
+                </div>
+                <div class="block">
+                    <div class="title">电视回看</div>
+                    <div class="adp"><img src="img/seat.png" width="240" height="360"></div>
+                </div>
+                <div class="block">
+                    <div class="title">热门影视</div>
+                    <div class="adp"><img src="img/seat.png" width="240" height="360"></div>
+                </div>
+                <div class="block">
+                    <div class="title">辽视</div>
+                    <div class="adp"><img src="img/seat.png" width="240" height="360"></div>
+                </div>
+            
+            
+            
+            </div>
+        </div>
+
+        <div class="showLine">
+            <ul>
+            </ul>
+        </div>
+    <script type="text/javascript">
+    //视频窗口
+    document.getElementById("iframego").innerHTML = '<iframe src="http://202.97.183.28:9090/templets/epg/vedio_gardenChannel.jsp" width="360" height="270" id="iframego1">';
+    </script>
+	<script src="EPGjs/keyPress.js"></script>
+	<script src="EPGjs/master.js"></script>
+	<script src="EPGjs/index.js"></script>
+	<script src="EPGjs/common.js"></script>
+</body>
+</html>

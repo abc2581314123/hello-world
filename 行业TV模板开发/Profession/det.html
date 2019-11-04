@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>首页</title>
+	<meta name="Page-View-Size" content="1280*720">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0">
+	<link rel="stylesheet" href="css/common.css">
+    <style type="text/css">
+        img { display: inline-block; vertical-align: top; }
+        * {
+            color: #c2c2c0;
+            margin: 0;
+            padding: 0;
+        }
+        .pic {
+            position: absolute;
+            left: 70px;
+            top: 110px;
+        }
+        .play {
+            width: 150px;
+            height: 60px;
+            text-align: center;
+            background: #229ccf;
+            line-height: 60px;
+            position: absolute;
+            top: 510px;
+            left: 440px;
+        }
+        .ser {
+            position: absolute;
+            left: 438px;
+            top: 430px;
+            overflow: hidden; 
+            height: 50px;
+            width: 550px;
+        }
+        .ser ul {
+            position: absolute; width: 10000px;
+        }
+        .ser ul li {
+            float: left;
+             width: 50px;
+             height: 50px;
+             text-align: center;
+             background: #229ccf;
+             line-height: 50px;
+             margin-right: 5px; 
+        }
+        .ser ul li.sel, .play.sel {
+            background: #ffae00;
+            color: #333
+        }
+    </style>
+</head>
+<body style="width:1280px; height:720px; background: url('img/body.jpg') no-repeat">
+    <!-- 电影海报 -->
+    <div class="pic">
+        <img src="img/seat.png" width="320" height="460">
+    </div>
+
+    <!-- 电影名称 -->
+    <div style="position: absolute; left: 440px; top: 110px; font-size: 30px;">奥特曼大战铁胆火车侠</div>
+    
+    <!-- 导演 -->
+    <div style="position: absolute; left: 440px; font-size: 24px; top: 160px;">导演： giao哥</div>
+
+    <!-- 导演 -->
+    <div style="position: absolute; left: 840px; font-size: 24px; top: 160px;">演员： giao哥</div>
+
+    <!-- 简介 -->
+    <div style="position: absolute; font-size: 22px; width: 750px; left: 445px; top: 235px; ">经济实用的好车，请来了“嘉正服务”组合。希望这个组合坚持下去经济实用的好车，请来了“嘉正服务”组合。希望这个组合坚持下去经济实用的好车，请来了“嘉正服务”组合。希望这个组合坚持下去经济实用的好车，请来了“嘉正服务”组合。希望这个组合坚持下去经济实用的好车，请来了“嘉正服务”组合。希望这个组合坚持下去经济实用的好车，请来了“嘉正服务”组合。，请来了“嘉正服务”组合。希望这个组合坚持下去</div>
+
+    <div class="ser">
+        <ul>
+            <li>01</li>
+            <li>02</li>
+            <li>03</li>
+            <li>04</li>
+            <li>05</li>
+            <li>06</li>
+            <li>07</li>
+            <li>08</li>
+            <li>09</li>
+            <li>10</li>
+            <li>01</li>
+            <li>02</li>
+            <li>03</li>
+            <li>04</li>
+            <li>05</li>
+            <li>06</li>
+            <li>07</li>
+            <li>08</li>
+            <li>09</li>
+            <li>10</li>
+        </ul>
+    </div>
+
+    <div class="leftArrow" style="position: absolute; left: 1000px; top: 443px;"><img src="img/leftA.png"></div>
+
+    <div class="play">播放</div>
+
+	<script src="js/keyPress.js"></script>
+	<script src="js/master.js"></script>
+	<script src="js/det.js"></script>
+	<script src="js/common.js"></script>
+</body>
+</html>

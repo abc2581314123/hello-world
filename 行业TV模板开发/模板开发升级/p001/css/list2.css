@@ -1,0 +1,17 @@
+.title {
+	position: absolute;
+	color: #ffff21;
+	top: 40px;
+	left: 40px;
+}
+#list {
+	position: absolute;
+	top: 100px;
+	left: 25px;
+}
+#list p { width: 225px; text-align: left; height: 30px; line-height: 30px; font-size: 18px; }
+#list li {
+	 float: left;
+	 margin:0 10px;
+	 margin-bottom: 80px;
+}

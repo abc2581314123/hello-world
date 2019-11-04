@@ -1,0 +1,10 @@
+.enterImg { width: 475px; height: 405px; overflow: hidden; border-radius: 6px; -webkit-border-radius: 6px;}
+.enterImg img { width: 100%; }
+
+#index .focus .enterImg  {
+	width: 522px;
+	height: 445px;
+	margin: -20px 0 0 -20px;
+	border: 4px solid #fcff0e;
+	box-shadow: 0 0 10px #fcff0e;
+}

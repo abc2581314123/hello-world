@@ -1,0 +1,13 @@
+
+#行业_epg_根据父节点获取子节点列表接口
+tradeSortList=http\://10.10.19.14:9090/cms/trade_sortList.do
+
+#行业_epg_根据分类id获取节目列表
+tradeProgramList=http\://10.10.19.14:9090/cms/trade_programList.do
+
+#行业_epg_节目详情页接口
+tradeProgramDetails=http\://10.10.19.14:9090/cms/trade_programDetails.do
+
+
+#行业_epg_判断行业信息接口
+ProfessionMessage = http\://10.10.12.73:9090/exsit/hyUserInfor?
