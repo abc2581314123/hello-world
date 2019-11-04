@@ -1,0 +1,8 @@
+
+interface.properties 最后一行加上如下配置
+
+#电视剧综艺混排专题列表接口
+TVhpList=http://218.24.37.2/cms/special_searchTVSpecialList.do?page=1&rows=18
+
+
+路径 epg/WEB-INF/classes/interface.properties

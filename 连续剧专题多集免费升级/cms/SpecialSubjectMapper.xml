@@ -1,0 +1,127 @@
+<?xml version="1.0" encoding="UTF-8" ?>  
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<!-- 每一个表的命名空间必须不一样 -->	
+<mapper namespace="cn.com.besto.mapper.SpecialSubjectMapper">
+	
+	<sql id="Subject_Column_List">
+    	id, number, name, category, type, priority, poster1url, poster2url, poster3url, templetFlag, flag, createtime, updatetime
+	</sql>
+	<sql id="Program_Column_List">
+    	id, number, primaryid, code, name, providerid, createtime
+	</sql>
+	<sql id="FreeTime_Column_List">
+    	id, number, begintime, endtime, createtime
+	</sql>
+
+    <!-- 查询专题列表 by 张晋 -->
+    <select id="searchList" parameterType="java.lang.Integer" resultType="cn.com.besto.vo.SpecialSubjectVO">    
+		SELECT 
+			<include refid="Subject_Column_List"/>
+		FROM
+			cms_specialsubject 
+		WHERE 
+			category = '1'
+		AND
+			flag = '1'
+		ORDER BY 
+			ABS(priority) DESC
+		LIMIT 
+			#{pageid}, #{rowsid}
+    </select>
+    
+     <!-- 查询专题列表 by rendd-->
+    <select id="searchTVSpecialList" parameterType="java.lang.Object" resultType="cn.com.besto.vo.SpecialSubjectVO">    
+		SELECT 
+			<include refid="Subject_Column_List"/>
+		FROM
+			cms_specialsubject 
+		WHERE 
+			<if test="specialType !=null and specialType !=''">
+				category = #{specialType} AND
+			</if>
+		
+			flag = '1'
+		ORDER BY 
+			ABS(priority) DESC
+		LIMIT 
+			#{pageid}, #{rowsid}
+    </select>
+    
+	<!-- 查询专题信息 by 张晋 -->
+    <select id="searchInfo" parameterType="java.lang.String" resultType="cn.com.besto.vo.SpecialSubjectVO">    
+		SELECT 
+			<include refid="Subject_Column_List"/>
+		FROM
+			cms_specialsubject 
+		WHERE
+			number = #{number}
+    </select>
+    
+    <!-- 查询专题免费时间 by 张晋 -->
+    <select id="searchFreeTime" parameterType="java.lang.String" resultType="cn.com.besto.vo.SpecialTimeVO">    
+		SELECT 
+			<include refid="FreeTime_Column_List"/>
+		FROM
+			cms_specialfreetime 
+		WHERE
+			number = #{number}
+    </select>
+    
+    <!-- 查询专题相关节目 by 张晋 -->
+    <select id="searchProgram" parameterType="java.lang.String" resultType="cn.com.besto.vo.SpecialProgramVO">    
+		SELECT 
+			<include refid="Program_Column_List"/>
+		FROM
+			cms_specialprogram 
+		WHERE
+			number = #{number}
+    </select>
+    
+    <!-- 查询节目信息 -->
+	<select id="searchProgramInfo" parameterType="java.lang.String" resultType="cn.com.besto.vo.ProgramVO">
+		SELECT
+			a.director,
+			a.actordisplay,
+			a.description,
+			a.cpid,
+			c.fileurl
+		FROM
+			cms_program a
+		LEFT JOIN cms_pictureprogrammapping b ON a.primaryid = b.program_id
+		LEFT JOIN cms_picture c ON b.picture_id = c.primaryid
+		WHERE
+			a.primaryid = #{primaryid}
+		LIMIT 1<!-- 某些节目图片信息中没有平台信息，只能暂时截取1条 -->
+	</select>
+    
+    <!-- 查询节目分类 -->
+	<select id="searchProgramCategory" parameterType="java.lang.String" resultType="java.lang.String">
+		SELECT
+			category_id
+		FROM
+			cms_categoryprogrammapping
+		WHERE
+			program_id = #{primaryid}
+	</select>
+	
+	<!-- 查询专题编号 -->
+	<select id="searchSubNumber" parameterType="java.lang.String" resultType="java.lang.String">
+		SELECT
+			number
+		FROM
+			cms_specialprogram
+		WHERE
+			primaryid = #{primaryid}
+	</select>
+	
+	 <!-- 查询CPID -->
+	<select id="searchCpid" parameterType="java.lang.String" resultType="java.lang.String">
+		SELECT
+			cpid
+		FROM
+			cms_program
+		WHERE
+			primaryid = #{primaryid}
+	</select>
+	
+</mapper> 

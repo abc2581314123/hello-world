@@ -1,0 +1,254 @@
+.ml20{margin-left: 20px;}
+.fcfd0{color:#ffd200;}
+.main{
+	width: 1280px;
+	height: 994px;
+	padding: 80px 0;
+	padding-top: 0px;
+}
+.container{
+	height: 320px;
+	padding: 0 50px;
+	overflow: hidden;
+	margin-top: 50px;
+}
+.title{
+	margin-top: 70px;
+}
+.program-type-logo{
+	vertical-align: top;
+	margin-left: 15px;
+}
+.prefer-title{
+	margin-left: 50px;
+	color:#ffd200;
+	margin-top: 60px;
+}
+.program-name{
+	 color:#ccc;
+}
+.program-container{
+	position: relative;
+	margin-top: 30px;
+}
+.program-pic{
+	position: absolute;
+	left: 0;
+	top: 0;
+	width: 248px;
+	height: 370px;
+}
+.program-content{
+	margin-left: 220px;
+}
+.program-info{
+	font-size: 20px;
+}
+.program-info>p{
+	margin-bottom: 24px;
+}
+.program-staff{
+	/*border:solid 2px rgba(255,255,255,.2);*/
+	/*border-radius: 3px;*/
+	color: #fff;
+}
+.program-staff-sel{
+	background-color: #058dd1;
+}
+.program-funcs{
+	margin-top: -10px;
+}
+.program-func{
+	position: relative;
+	float: left;
+	width: 170px;
+	height: 60px;
+	line-height: 60px;
+	border:solid 2px rgba(255,255,255,.2);
+	border-radius: 3px;
+	font-size: 26px;
+	text-align: center;
+}
+.program-func-sel{
+	border-color: #ffff00;
+	background-color: #ffff00;
+	color: #1d245b;
+}
+.program-func-play{
+	background-image: url(../img/ico-play.png);
+	background-repeat: no-repeat;
+	background-position: 40px center;
+}
+.program-func-favor{
+	background-image: url(../img/ico-favor.png);
+	background-repeat: no-repeat;
+	background-position: 40px center;
+}
+.program-func-list{
+	background-image: url(../img/ico-list.png);
+	background-repeat: no-repeat;
+	background-position: 20px center;
+}
+.program-func-play-sel{
+	background-image: url(../img/ico-play-sel.png);
+}
+.program-func-list-sel{
+	background-image: url(../img/ico-list-sel.png);
+}
+.program-func-favor-sel{
+	background-image: url(../img/ico-favor-sel.png);
+}
+.shade{
+	position: absolute;
+	z-index: 99;
+	left: 0;
+	width: 1280px;
+	height: 188px;
+	background-repeat: no-repeat;
+}
+.shade-up{
+	top: 0;
+	background-image: url(../img/shade-up.png);
+}
+.shade-down{
+	top: 532px;
+	background-image: url(../img/shade-down.png);
+}
+.prefer-content{
+	padding: 0 50px;
+	overflow: hidden;
+}
+.program{
+	position: relative;
+	float: left;
+	margin: 25px 30px 0 0;
+}
+.program-last{
+	margin: 25px 0 0 0;
+}
+.program>img{
+	display: block;
+}
+.program-mind{
+	height: 32px;
+	width: 120px;
+	line-height: 32px;
+	font-size: 22px;
+	color: #dadada;
+	text-align: center;
+	white-space:nowrap; 
+	text-overflow:ellipsis; 
+	overflow: hidden;
+}
+.program-sel{
+	position: absolute;
+	left: -31px;
+	top: -8px;
+	width: 222px;
+	height: 234px;
+	padding-left: 23px;
+	background: url(../img/selbg-list1.png) no-repeat 0 0;
+	color: #152755;
+}
+.program-sel>img{
+	display: block;
+	margin-top: 11px;
+	margin-left: -4px;
+	-webkit-border-radius:6px;
+}
+.program-sel-mind{
+	position: absolute;
+	left: 19px;
+	bottom: 23px;
+	width: 132px;
+	height: 50px;
+	font-size: 25px;
+	color: #152755;
+	line-height: 50px;
+	background-color: #ffff00;
+	text-align: center;
+}
+
+.layer{
+	position: absolute;
+	left: 0;
+	top: 0;
+	width: 1280px;
+	height: 720px;
+	overflow: hidden;
+	border: 1px solid transparent;
+	background: rgba(0,0,0,.9);
+}
+.selector-nav-container{
+	padding-top: 220px;
+}
+.selector-nav-title{
+	position: absolute;
+	right: 950px;
+	top: 234px;
+}
+.selector-nav{
+	position: relative;
+	width: 625px;
+	height: 55px;
+	margin-left: 410px;
+	overflow: hidden;
+}
+.selector-nav-nav{
+	position: absolute;
+	left: 0;
+	top: 0;
+	height: 55px;
+}
+.selector-nav-ele{
+	float: left;
+	width: 125px;
+	height: 55px;
+	line-height: 55px;
+	text-align: center;
+	font-size: 26px;
+}
+.selector-nav-ele-current{
+	background-color: #636261;
+}
+.selector-nav-ele-sel{
+	background-color: #058dd1;
+	color: #fff;
+}
+
+.selector-single-container{
+	padding-top: 60px;
+}
+.selector-single-title{
+	position: absolute;
+	right: 950px;
+	top: 352px;
+}
+.selector-single{
+	width: 700px;
+	margin-left: 410px;
+	overflow: hidden;
+}
+.selector-single-ele{
+	width: 54px;
+	height: 54px;
+	line-height: 54px;
+	text-align: center;
+	border: solid 1px #636261;
+	float: left;
+	margin: 6px;
+	position: relative;
+}
+.selector-single-ele-sel{
+	border-color: #058dd1;
+	background-color: #058dd1;
+	color: #fff;
+}
+.favor-msg{
+	position: absolute;
+	top: 60px;
+	left: 85px;
+	width: 318px;
+	height: 72px;
+	background: url(../img/favor-msg.png) no-repeat 0 0;
+}

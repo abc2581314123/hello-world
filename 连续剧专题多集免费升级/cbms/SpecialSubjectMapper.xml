@@ -1,0 +1,188 @@
+<?xml version="1.0" encoding="UTF-8" ?>  
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<!-- 每一个表的命名空间必须不一样 -->	
+<mapper namespace="com.bytuetech.cbms.mapper.SpecialSubjectMapper">
+	
+	<sql id="Subject_Column_List">
+    	id, number, name, category, type, priority, poster1url, poster2url, poster3url, templetFlag, flag, createtime, updatetime
+	</sql>
+	<sql id="Insert_Column_List">
+    	name, category, type, priority, flag, templetFlag, createtime
+	</sql>
+	<sql id="Program_Column_List">
+    	number, primaryid, code, name, providerid, createtime
+	</sql>
+	<sql id="FreeTime_Column_List">
+    	number, begintime, endtime, createtime
+	</sql>
+
+    <!-- 查询专题管理列表(其他实现不要调用此SQL) by 张晋 -->
+    <select id="searchList" parameterType="com.bytuetech.cbms.vo.SpecialSubjectVO" resultType="com.bytuetech.cbms.vo.SpecialSubjectVO">    
+		SELECT 
+			<include refid="Subject_Column_List"/>
+		FROM
+			cms_specialsubject 
+		<where>
+			1 = 1
+			<if test="number != null and number != '' ">
+			 	and number LIKE CONCAT('%', '${number}', '%')
+		  	</if>
+			<if test="name != null and name != '' ">
+				and name LIKE CONCAT('%', '${name}', '%')
+		  	</if>
+		  	<if test="category != null and category != '' ">
+				and category LIKE CONCAT('%', '${category}', '%')
+		  	</if>
+		</where>
+		ORDER BY createtime DESC
+    </select>
+    
+    <!-- 查询专题信息 by 张晋 -->
+    <select id="searchSubjectInfo" parameterType="java.lang.String" resultType="com.bytuetech.cbms.vo.SpecialSubjectVO">    
+		SELECT 
+         	<include refid="Subject_Column_List"/>
+		FROM
+            cms_specialsubject 
+		WHERE
+			number = #{number}
+    </select>
+    
+	<!-- 保存专题 by 张晋 -->
+	<insert id="save" parameterType="com.bytuetech.cbms.vo.SpecialSubjectVO" useGeneratedKeys="true" keyProperty="id">
+	    INSERT INTO 
+	    	cms_specialsubject (<include refid="Insert_Column_List"/>) 
+	    VALUES (
+	    	#{name}, #{category}, #{type}, #{priority}, 
+	    	<if test="category != null and category == '1'.toString()">
+			 	'0',
+		  	</if>
+		  	<if test="category != null and category == '0'.toString()">
+			 	'',
+		  	</if>
+		  	<if test="category != null and category == '2'.toString()">
+			 	'0',
+		  	</if>
+		  	<if test="category != null and category == '3'.toString()">
+			 	'0',
+		  	</if>
+	    	#{templetFlag}, #{createtime}
+	    )
+	</insert>
+	
+	<!-- 更新专题编号 by 张晋 -->
+	<update id="updateNumberById" parameterType="com.bytuetech.cbms.vo.SpecialSubjectVO">
+	    UPDATE 
+	    	cms_specialsubject
+		SET 
+			number = #{number}
+		WHERE
+			id = #{id}
+	</update>
+	
+	<!-- 保存专题相关节目 by 张晋 -->
+	<insert id="saveProgram" parameterType="com.bytuetech.cbms.vo.SpecialProgramVO">
+	    INSERT INTO 
+	    	cms_specialprogram (<include refid="Program_Column_List"/>) 
+	    VALUES (
+	    	#{number}, #{primaryid}, #{code}, #{name}, #{providerid}, #{createtime}
+	    )
+	</insert>
+	
+	<!-- 更新专题图片地址 -->
+	<update id="updatePicUrl" parameterType="com.bytuetech.cbms.vo.SpecialSubjectVO">
+	    UPDATE 
+	    	cms_specialsubject
+		SET 
+			<if test="poster1url != null and poster1url != ''">
+			 	poster1url = #{poster1url},
+		  	</if>
+		  	<if test="poster2url != null and poster2url != ''">
+			 	poster2url = #{poster2url},
+		  	</if>
+		  	<if test="poster3url != null and poster3url != ''">
+			 	poster3url = #{poster3url},
+		  	</if>
+			number = #{number}
+		WHERE
+			number = #{number}
+	</update>
+	
+	<!-- 新增专题免费时间 by 张晋 -->
+	<insert id="addFreeTime" parameterType="java.lang.String">
+	    INSERT INTO 
+	    	cms_specialfreetime (<include refid="FreeTime_Column_List"/>) 
+	    VALUES (
+	    	#{number}, #{begintime}, #{endtime}, #{createtime}
+	    )
+	</insert>
+	
+	<!-- 查看专题节目列表 by 张晋 -->
+	<select id="checkProgram" parameterType="com.bytuetech.cbms.vo.SpecialSubjectVO" resultType="com.bytuetech.cbms.vo.SpecialProgramVO">
+		SELECT
+			id, <include refid="Program_Column_List"/>
+		FROM
+			cms_specialprogram
+		WHERE
+			number = #{number}
+	</select>
+	
+	<!-- 查看专题免费时间列表 by 张晋 -->
+	<select id="checkTime" parameterType="com.bytuetech.cbms.vo.SpecialSubjectVO" resultType="com.bytuetech.cbms.vo.SpecialTimeVO">
+		SELECT
+			id, <include refid="FreeTime_Column_List"/>
+		FROM
+			cms_specialfreetime
+		WHERE
+			number = #{number}
+	</select>
+	
+	<!-- 变更专题状态 -->
+	<update id="updateFlag" parameterType="java.lang.String">
+	    UPDATE 
+	    	cms_specialsubject
+		SET 
+			flag = #{flag}
+		WHERE
+			number = #{number}
+	</update>
+	
+	<!-- 更新专题图片地址 -->
+	<update id="edit" parameterType="com.bytuetech.cbms.vo.SpecialSubjectVO">
+	    UPDATE 
+	    	cms_specialsubject
+		SET 
+			name = #{name},
+			category = #{category},
+			type = #{type},
+			priority = #{priority},
+			templetFlag = #{templetFlag},
+			<if test="category != null and category == '1'.toString()">
+			 	flag = '0',
+		  	</if>
+		  	<if test="category != null and category == '0'.toString()">
+			 	flag = '',
+		  	</if>
+			updatetime = #{updatetime}
+		WHERE
+			number = #{number}
+	</update>
+	
+	<!-- 删除专题免费时间 -->
+	<delete id="deleteFreeTime" parameterType="java.lang.String">
+		DELETE
+		FROM
+			cms_specialfreetime
+		WHERE
+			number = #{number}
+	</delete>
+	
+	<!-- 删除专题免费时间 -->
+	<delete id="deleteProgram" parameterType="java.lang.String">
+		DELETE
+		FROM
+			cms_specialprogram
+		WHERE
+			number = #{number}
+	</delete>
+	
+</mapper>
